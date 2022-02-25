@@ -1,0 +1,50 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="container col-12 offset-6 mx-auto">
+    <h1>Payment</h1>
+
+    <% if(shoppingCart) { %>
+        <% let qty = [] %>
+        <% let total = [] %> 
+        <% for(let item of shoppingCart) { %>
+            <% qty.push(Number(item.buyQty)) %>
+            <% total.push(item.buyQty * item.product.price) %> 
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <!-- <div class="col-md-4">
+                    <img src="..." class="img-fluid rounded-start" alt="...">
+                    </div> -->
+                    <form action="">
+                        <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= item.product.name %></h5>
+                            <p class="card-text">Price: <%= item.product.price %></p>
+                            <p class="card-text">Qty: <%= item.buyQty %></p>
+                            <p> Subtotal: <%= (item.product.price * item.buyQty).toFixed(2)  %> </p>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            
+            </div>
+
+            <% } %>
+            <% const sum = qty.reduce((acc, cur) => { %>
+                <% return acc + cur %> 
+                <% }) %> 
+            <% const totalToPay = total.reduce((acc, cur) => { %>
+                <% return acc + cur %> 
+                <% }) %> 
+            <p class="card-text">Total (<%= sum %> Product):  $<%= totalToPay.toFixed(2) %> </p>
+                
+                
+    <% } %>
+    <form action="/cart/checkout" method="POST" class="mb-5">
+        <div class="">
+            <button class="btn btn-success">Pay</button>
+        </div>
+    </form>
+
+    <a href="/cart">Back To Cart</a>
+</div>
+

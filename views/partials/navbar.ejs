@@ -1,0 +1,48 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light " id="navbar-bgcolor">
+<!-- <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light"></nav> -->
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">E-Ständle</a>
+      <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/stores">All Ständle</a>
+          <% if(currentUser) { %>
+            <a class="nav-link" href="/stores/new">Add Ständle</a>
+          <% } %>  
+        </div>
+        <div class="navbar-nav ms-auto">
+            <% if(!currentUser) { %> 
+              <a href="/login" class="nav-link">Login</a>
+              <a href="/register" class="nav-link">Register</a>
+            <% } else { %>  
+              <form action="/logout" method="POST">
+                <button class="btn btn-outline-warning text-light">Logout</button>
+              </form>
+            <% } %>  
+          
+
+            <% if(shoppingCart) { %>
+              <%let items = []%>
+              <%shoppingCart.map((e) => {%>
+                <%  for(prop in e) {%>
+                  <%  if(prop === 'buyQty') {%>
+                    <% items.push(Number(e[prop]))%>
+                    <%  } %>
+                <% }%>
+              <%})%>
+              <% if(shoppingCart.length !== 0) { %> 
+                <%const sum = items.reduce((acc,cur) => {%>
+                    <% return acc + cur%>
+                <%})%>
+                
+              <a class="btn btn-outline-warning mt-3 mt-md-0 mx-3" href="/cart"><i class="fas fa-shopping-cart"></i><%= sum %> </a>
+              <%}%>
+            <% } %> 
+          </div>
+          
+      </div>
+    </div>
+  </nav>

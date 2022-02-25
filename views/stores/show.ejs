@@ -1,0 +1,63 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="container mb-5" id="store-container">
+    <div id="storeCarousel" class="carousel slide w-100 mb-4" data-bs-ride="carousel" data-bs-interval="false">
+        <div class="carousel-inner" id="img-container">
+            <% store.images.forEach((img, i) => { %> 
+            <div id="carouselImg" class="carousel-item <%= i === 0 ? "active" : "" %> ">
+                <img src="<%= img.url %> " class="d-block w-100" alt="">
+            </div>
+            <% }) %>
+        </div>
+        <% if(store.images.length > 1) { %> 
+        <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <% } %> 
+    </div>
+
+    <div class="info-container mb-4">
+        <div>
+            <h1><%= store.name %> </h1>
+            <p>Location: <%= store.street %>, <%= store.city %> <%= store.zipcode %> </p>
+        </div>
+        
+        <div class="mt-5">
+            <h2>All Products from <%= store.name %> </h2>
+            <% if(store.products.length === 0) { %>
+                <h3>No products available</h3>
+            <% } %> 
+            <div class="card-container mb-5">
+                <% for(let product of store.products) { %>
+                    <% if(product.inStock !== 0) {%> 
+                        <div class="card mx-3 mb-2" style="width: 15rem;">
+                            <img src="<%= product.images[0].url %>" class="card-img-top product-img" alt="<%= product.name %> ">
+                            <div class="card-body">
+                            <h5 class="card-title"><a href="/stores/<%= store._id %>/products/<%=product._id%>"><%= product.name %></a></h5>
+                            <p class="card-text">$<%= product.price %></p>
+                            
+                            <a href="/stores/<%= store._id %>/products/<%=product._id%>" class="btn btn-success">Product details</a>
+                            </div>
+                        </div>         
+                    <% } %> 
+                <% } %>  
+            </div>
+            
+            <% if(currentUser && store.owner.equals(currentUser._id)) { %> 
+                
+                <a class="btn btn-primary btn-sm" href="/stores/<%= store._id %>/products/new">Add Product</a>
+                <a class="btn btn-primary btn-sm" href="/stores/<%= store._id %>/edit">Edit Ständle</a>
+                
+                <form class="d-inline" action="/stores/<%= store._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-sm btn-danger ">Delete</button>
+                </form>
+            <% } %> 
+             
+        </div>
+    </div>
+</div>

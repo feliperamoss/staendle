@@ -1,0 +1,64 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="row container">
+    <div class="col-md-6 offset-md-3 border shadow p-2 p-md-5 mb-5">
+        <form action="/stores/<%= store._id %>?_method=PUT" method="POST" class="container needs-validation" enctype="multipart/form-data" novalidate>
+            <h1>Edit Ständle</h1>
+        
+            <div class="mb-3">
+                <label class="form-label" for="name">Ständle Name</label>
+                <input class="form-control" type="text" name="name" id="name" required value="<%= store.name %>">
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="street">Street</label>
+                <input class="form-control" type="text" name="street" id="street" required value="<%= store.street %>">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="city">City</label>
+                <input class="form-control" type="text" name="city" id="city" required value="<%= store.city %>">
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="zipcode">Zipcode</label>
+                <input class="form-control" type="number" name="zipcode" id="zipcode" required value="<%= store.zipcode%>">
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-file custom-file">
+                        <input type="file" class="form-file-input form-control" id="image" name="image" multiple>
+                        <label class="form-file-label form-label" for="image">
+                        <span class="form-file-text custom-file-label">Add more image(s)
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <% store.images.forEach(function(img, i) { %>
+                    <img class="img-thumbnail" src="<%=img.thumbnail%>" alt="Stander image">
+                    <div class="form-check-inline">
+                        <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i %>">Delete</label>
+                <% }) %> 
+            </div>
+            <button class="btn btn-primary">Edit Ständle</button>
+        </form>
+        <a href="/stores/<%= store._id %> ">Back To Ständle</a>
+    </div>
+</div>
+
+<script>
+
+</script>

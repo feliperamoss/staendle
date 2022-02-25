@@ -1,0 +1,31 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="container">
+      
+      <h1>Alle Ständle</h1>
+
+      <% for(let store of stores) { %>
+            <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4 p-2">
+                        <% if(store.images.length) { %> 
+                         <img src="<%= store.images[0].url %> " class="img-fluid rounded-start" alt="Image Stander">
+                      <% } else{ %>
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1613757668274-4275abb83673?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
+                    <% } %> 
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title"><%= store.name %> </h5>
+                        <p class="card-text"><%= store.city %> </p>
+                        <p class="card-text"><a href="/stores/<%= store._id %>">Details</a> </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      <% } %>
+
+      <% if(currentUser) {%>
+            <a href="/stores/new">Add Ständle</a>
+      <% } %> 
+</div>

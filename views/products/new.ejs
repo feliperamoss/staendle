@@ -1,0 +1,51 @@
+<%-  layout('layouts/boilerplate') %> 
+
+<div class="row container">
+    
+    <div class="col-md-6 offset-md-3 border shadow p-2 p-md-5 mb-5">
+        <h1>Add Product</h1>
+        <form action="/stores/<%= store._id %>/products" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" for="name">Product Name</label>
+                <input class="form-control" type="text" name="name" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="name">Description</label>
+                <textarea class="form-control" type="text" name="description" id="description" required></textarea>
+            </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text">&euro;</span>
+                <input class="form-control" type="number" name="price" id="price" step="0.01" min="0.01" required>
+                <select class="form-select" name="unity" id="">
+                    <option value="Kg">Kg</option>
+                    <option value="Un">Un</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="inStock">Available</label>
+                <input class="form-control" type="number" name="inStock" id="inStock" required>
+            </div>
+
+            <div class="mb-3">
+                <select class="form-select" name="category" id="">
+                    <option value="fruit">fruit</option>
+                    <option value="vegetable">vegetable</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <div class="form-file custom-file">
+                        <input type="file" class="form-file-input form-control" id="productImage" name="productImage" multiple>
+                        <label class="form-file-label form-label" for="image">
+                        <span class="form-file-text custom-file-label">Add more image(s)
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn btn-primary">Add Product</button>
+        </form>
+        <a href="/stores/<%= store._id %>">Go back</a>
+    </div>
+</div>
