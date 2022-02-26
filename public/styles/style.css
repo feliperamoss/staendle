@@ -157,6 +157,16 @@ body{
 }
 
 @media screen and (max-width: 568px) {
+    .container-home {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container-home img{
+        height: 10rem;
+        width: 10rem;
+    }
+
     .card-container {
         flex-direction: column;
         align-items: center;
