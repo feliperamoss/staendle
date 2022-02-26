@@ -16,7 +16,8 @@
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title"><%= store.name %> </h5>
-                    <p class="card-text"><%= store.city %> </p>
+                    <p class="card-text"><%= store.city %> <%= store.zipcode %> </p>
+                    <p class="card-text"><%= store.street %> </p>
                     <p class="card-text"><a href="/stores/<%= store._id %>">Details</a> </p>
                   </div>
                 </div>
