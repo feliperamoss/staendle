@@ -34,7 +34,9 @@ app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-mongoose.connect('mongodb://localhost:27017/practice', {
+//const dbUrl = process.env.DB_URL
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/practice'
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -45,11 +47,11 @@ db.once('open', () => {
     console.log('Database connected');
 });
 
-const secret = 'thisshouldbeabettersecret'
+const secret = process.env.SECRET || 'thisisasecret'
 
 const store = MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/practice',
-    touchAfter: 24 * 60 * 60,
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60, //24h, 60m, 60s session is updated one time in 24h
     crypto: {
         secret,
     },
