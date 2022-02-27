@@ -46,11 +46,11 @@
             </div>
             <div class="mb-3">
                 <% product.images.forEach(function(img, i) { %>
-                    <img class="img-thumbnail" src="<%=img.productThumbnail%>" alt="Stander image">
+                    <img class="img-thumbnail" src="<%=img.productThumbnail%>" alt="Product image">
                     <div class="form-check-inline">
-                        <input type="checkbox" name="deleteImages[]" id="productImage-<%=i%>" value="<%=img.filename%>">
+                        <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%=img.filename%>">
                     </div>
-                    <label for="productImage-<%=i %>">Delete</label>
+                    <label for="image-<%=i %>">Delete</label>
                 <% }) %> 
             </div>
             <button class="btn btn-primary">Edit Product</button>

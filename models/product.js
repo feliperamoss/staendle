@@ -73,10 +73,4 @@ const ProductSchema = new mongoose.Schema( {
     }
 });
 
-ProductSchema.post("save", function(doc) {
-    // console.log(this)
-    
-    
-  });
-
 module.exports = mongoose.model('Product', ProductSchema);
