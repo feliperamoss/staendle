@@ -93,29 +93,6 @@ router.put('/:id', upload.array('image'), isLoggedIn, isOwner, async (req, res) 
     await store.save();
     req.flash('success', 'Successfully updated stander');
     res.redirect(`/stores/${id}`)
-    // const result = sanitizeHtml(req.body.name, {
-    //     allowedTags: [],
-    //     allowedAttributes: {},
-    // })
-    // if(result != req.body.name) {
-    //     req.flash('error', 'Cannot include HTML');
-    //     return res.redirect(`/stores/${id}`)
-    // } else {
-    //     const store = await Store.findByIdAndUpdate(id, req.body);
-    //     const imgs = req.files.map(f=> ({url: f.path, filename: f.filename}));
-    //     store.images.push(...imgs);
-    //     if(req.body.deleteImages) {
-    //         for(let filename of req.body.deleteImages) {
-    //             await cloudinary.uploader.destroy(filename);
-    //         }
-    //         await store.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
-    // }
-    
-    //     await store.save();
-    //     req.flash('success', 'Successfully updated stander');
-    //     res.redirect(`/stores/${id}`)
-    // }
-
 })
 
 //Delete store
