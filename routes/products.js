@@ -21,7 +21,7 @@ router.post('/',upload.array('productImage'), async (req, res, next) => {
         const {id} =req.params
         const store = await Store.findById(id);
         const product = await new Product(req.body);
-        product.images = req.files.map(f=> ({url: f.path, f: f.filename}))
+        product.images = req.files.map(f=> ({url: f.path, filename: f.filename}))
         store.products.push(product);
         product.store = store;
         await store.save();
