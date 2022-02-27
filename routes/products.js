@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});//toget params from other routes
 const Product = require('../models/product');
 const Store = require('../models/store');
+const {isLoggedIn, isOwner} = require('../middleware')
 const multer = require('multer');
 const {storage} = require('../cloudinary/product');
 const upload = multer({storage});
@@ -45,7 +46,7 @@ router.get('/:productId', async (req, res) => {
 
 //Show form to edit product
 
-router.get('/:productId/edit', async (req, res) => {
+router.get('/:productId/edit',isLoggedIn, isOwner, async (req, res) => {
     const {id, productId} = req.params;
     const store = await Store.findById(id);
     const product = await Product.findById(productId); 
@@ -54,7 +55,7 @@ router.get('/:productId/edit', async (req, res) => {
 
 //Update Product
 
-router.put('/:productId', upload.array('productImage'), async (req, res) => {
+router.put('/:productId', upload.array('productImage'), isLoggedIn, isOwner, async (req, res) => {
     const {id,productId} = req.params;
     for(let item in req.body) {
         const validate = sanitizeHtml(req.body[item], {
@@ -84,7 +85,7 @@ router.put('/:productId', upload.array('productImage'), async (req, res) => {
 
 //Delete route
 
-router.delete('/:productId', async (req, res) => {
+router.delete('/:productId', isLoggedIn, isOwner, async (req, res) => {
     const {id, productId} = req.params;
     await Product.findByIdAndDelete(productId);
     res.redirect(`/stores/${id}`)
