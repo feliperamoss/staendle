@@ -41,21 +41,6 @@ const arr2 = {
   }
 }
 
-// arr.forEach((e) => {
-//     for(i in e.product) {
-//         console.log(e.product[i])
-//     }
-// })
-
-
-
-
-// for(let item of arr) {
-//     let result = Number(item.buyQty)
-//     if(id === item.product._id)
-//     console.log(result+=1)
-    
-// }
 const id = '62065ac2820eea6eba380207'
 const check = (arr) => {
     
