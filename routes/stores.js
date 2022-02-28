@@ -6,6 +6,7 @@ const User = require('../models/user');
 const {isLoggedIn, isOwner} = require('../middleware')
 const multer = require('multer');
 const {storage} = require('../cloudinary'); //node looks automactly for a index.js
+//const upload = multer({dest: 'uploads/'}) //creates the folder uploads and upload the files in this folder
 const upload = multer({storage});
 const {cloudinary} = require('../cloudinary');
 const sanitizeHtml = require('sanitize-html');
