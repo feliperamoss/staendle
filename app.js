@@ -69,7 +69,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         htttpOnly: true,//these cookies are only accessable over http and not js
-        //secure:true, //means that the cookie should only work in https, does not work on localhost //uncomment that when deploy
+        secure:true, //means that the cookie should only work in https, does not work on localhost //uncomment that when deploy
         expires: Date.now() +1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -99,7 +99,6 @@ app.use('/', homeRoutes)
 app.use('/stores', storesRoutes);
 app.use('/stores/:id/products', productsRoutes);
 app.use('/cart', checkoutRoutes);
-// app.use('/stores/:id/products/:productId', checkoutRoutes);
 
 app.get('/search', async (req, res) => {
     const city = req.query.q
