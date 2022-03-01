@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const citySearch = req.body.searchStore
-    const city = citySearch.toLowerCase().replace(/^\w/, (c) => c.toUpperCase())
+    const city = citySearch.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase())
     res.redirect(`/search?q=${city}`) 
 })
 
