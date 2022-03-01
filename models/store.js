@@ -94,29 +94,9 @@ const StoreSchema = new mongoose.Schema({
 StoreSchema.pre("save", function(next) {
     
     this.city =
-    this.city.trim()[0].toUpperCase() + this.city.slice(1).toLowerCase();
+    this.city.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase())
       next();
     
   });
-
-// const clean = (value) => {
-//     const result = sanitizeHtml(value, {
-//         allowedTags: [],
-//         allowedAttributes: {},
-//     })
-//     if(result != value) {
-//         return value = 'HTML'
-//     } else {
-//         return result;
-//     }
-// }
- 
-// StoreSchema.pre("save", async function() {
-//     this.name = clean(this.name);
-//     this.city = clean(this.city);
-//     this.street = clean(this.street);
-   
-    
-// });
 
 module.exports = mongoose.model('Store', StoreSchema)
