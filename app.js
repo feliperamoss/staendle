@@ -15,6 +15,7 @@ const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
 const mongoSanitize = require('express-mongo-sanitize');
 
+const ExpressError = require('./utils/ExpressError');
 const Store = require('./models/store');
 const User = require('./models/user.js');
 const storesRoutes = require('./routes/stores')

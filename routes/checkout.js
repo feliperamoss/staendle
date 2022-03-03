@@ -5,10 +5,11 @@ const Store = require('../models/store');
 const {isLoggedIn} = require('../middleware');
 const product = require('../models/product');
 const store = require('../models/store');
+const catchAsync = require('../utils/catchAsync');
 
 //Add product to cart
 
-router.post('/stores/:id/products/:productId', async (req, res) => {
+router.post('/stores/:id/products/:productId', catchAsync(async (req, res) => {
     const {id, productId} = req.params;
     const qty = Number(req.body.buyQty)
     const product = await Product.findById(productId)
@@ -41,7 +42,7 @@ router.post('/stores/:id/products/:productId', async (req, res) => {
     
     req.flash('success', 'Product added to cart.')
     res.redirect(`/stores/${id}`)
-})
+}))
 
 //Show shopping cart
 
@@ -83,7 +84,7 @@ router.delete('/:productId/delete', (req, res) => {
 })
 
 //Add product to buy now
-router.post('/products/:productId', async (req, res) => {
+router.post('/products/:productId', catchAsync(async (req, res) => {
     const {id, productId} = req.params;
     const qty = Number(req.body.buyQty)
     const product = await Product.findById(productId)
@@ -108,7 +109,7 @@ router.post('/products/:productId', async (req, res) => {
     
     res.redirect(`/cart/checkout`)
     
-})
+}))
 
 //Show checkout
 
@@ -118,7 +119,7 @@ router.get('/checkout', isLoggedIn, (req, res) => {
 
 //Show checkout
 
-router.post('/checkout', isLoggedIn, async (req, res) => {
+router.post('/checkout', isLoggedIn, catchAsync(async (req, res) => {
     // const ids = [];
     // const qty = [];
 
@@ -145,7 +146,7 @@ router.post('/checkout', isLoggedIn, async (req, res) => {
     req.session.cart = [];
     
     res.redirect('/stores')
-})
+}))
 
 
 module.exports = router;

@@ -32,7 +32,7 @@ router.get('/login', (req, res) => {
 })
 
 //Login
-router.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), async(req, res) => {
+router.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), (req, res) => {
     req.flash('success', 'Welcome back!');
     const redirectUrl = req.session.returnTo || '/stores';
     delete req.session.returnTo; //deletes the object after

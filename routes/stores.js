@@ -6,17 +6,16 @@ const User = require('../models/user');
 const {isLoggedIn, isOwner} = require('../middleware')
 const multer = require('multer');
 const {storage} = require('../cloudinary'); //node looks automactly for a index.js
-//const upload = multer({dest: 'uploads/'}) //creates the folder uploads and upload the files in this folder
 const upload = multer({storage});
 const {cloudinary} = require('../cloudinary');
 const sanitizeHtml = require('sanitize-html');
-
+const catchAsync = require('../utils/catchAsync');
 //Show all stores
 
-router.get('/', async (req, res) => {
+router.get('/', catchAsync(async (req, res) => {
     const stores = await Store.find({})
     res.render('stores/index', {stores})
-})
+}))
 
 //Render form for new store
 router.get('/new', isLoggedIn, (req, res) => {
@@ -41,8 +40,8 @@ router.post('/', upload.array('image'), isLoggedIn, async (req, res, next) => {
 })
 
 
-//Show store detail
-router.get('/:id', async (req, res) => {
+//Show store detail with catchasync
+router.get('/:id', catchAsync(async (req, res, next) => {
     const {id} = req.params;
     const store = await Store.findById(id).populate('products').populate('owner');
     console.log(store)
@@ -51,23 +50,28 @@ router.get('/:id', async (req, res) => {
         return res.redirect('/stores')
     }
     res.render('stores/show', {store})
-})
+}))
 
-//Show edit form
+//Show edit form without catchasync
 
-router.get('/:id/edit', isLoggedIn, isOwner, async (req, res) => {
-    const {id} = req.params;
-    const store = await Store.findById(id)
+router.get('/:id/edit', isLoggedIn, isOwner, async (req, res, next) => {
+    try{
+        const {id} = req.params;
+        const store = await Store.findById(id)
     if(!store) {
         req.flash('error', 'Cannot find that store.')
         return res.redirect('/stores')
     }
-    res.render('stores/edit', {store})
+        res.render('stores/edit', {store})
+    } catch(e) {
+        next(e)
+    }
+    
 })
 
 //edit store
 
-router.put('/:id', upload.array('image'), isLoggedIn, isOwner, async (req, res) => {
+router.put('/:id', upload.array('image'), isLoggedIn, isOwner, catchAsync(async (req, res) => {
     const {id} = req.params;
     for(let item in req.body) {
         const validate = sanitizeHtml(req.body[item], {
@@ -94,14 +98,14 @@ router.put('/:id', upload.array('image'), isLoggedIn, isOwner, async (req, res) 
     await store.save();
     req.flash('success', 'Successfully updated stander');
     res.redirect(`/stores/${id}`)
-})
+}))
 
 //Delete store
 
-router.delete('/:id', isLoggedIn, isOwner, async (req, res) => {
+router.delete('/:id', isLoggedIn, isOwner, catchAsync(async (req, res) => {
     const {id} = req.params;
     await Store.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted campground');
     res.redirect('/stores')
-})
+}))
 module.exports = router;

@@ -8,15 +8,16 @@ const {storage} = require('../cloudinary/product');
 const upload = multer({storage});
 const {cloudinary} = require('../cloudinary');
 const sanitizeHtml = require('sanitize-html');
+const catchAsync = require('../utils/catchAsync');
 
 //Render form
-router.get('/new', async (req, res) => {
+router.get('/new', catchAsync(async (req, res) => {
     const store = await Store.findById(req.params.id);
     res.render('products/new', {store});
-})
+}))
 
 //Create new product
-router.post('/',upload.array('productImage'), async (req, res, next) => {
+router.post('/',upload.array('productImage'), catchAsync(async (req, res, next) => {
     try {
         const {id} =req.params
         const store = await Store.findById(id);
@@ -33,29 +34,29 @@ router.post('/',upload.array('productImage'), async (req, res, next) => {
       catch(e) {
           next(e)
       }
-})
+}))
 
 //Show info about product
 
-router.get('/:productId', async (req, res) => {
+router.get('/:productId', catchAsync(async (req, res) => {
     const {id, productId} = req.params;
     const store = await Store.findById(id);
     const product = await Product.findById(productId);
     res.render('products/show', {product, store})
-})
+}))
 
 //Show form to edit product
 
-router.get('/:productId/edit',isLoggedIn, isOwner, async (req, res) => {
+router.get('/:productId/edit',isLoggedIn, isOwner, catchAsync(async (req, res) => {
     const {id, productId} = req.params;
     const store = await Store.findById(id);
     const product = await Product.findById(productId); 
     res.render('products/edit', {product, store})
-})
+}))
 
 //Update Product
 
-router.put('/:productId', upload.array('productImage'), isLoggedIn, isOwner, async (req, res) => {
+router.put('/:productId', upload.array('productImage'), isLoggedIn, isOwner, catchAsync(async (req, res) => {
     const {id,productId} = req.params;
     for(let item in req.body) {
         const validate = sanitizeHtml(req.body[item], {
@@ -81,15 +82,15 @@ router.put('/:productId', upload.array('productImage'), isLoggedIn, isOwner, asy
 
     req.flash('success', 'Successfully updated product');
     res.redirect(`/stores/${id}`)
-})
+}))
 
 //Delete route
 
-router.delete('/:productId', isLoggedIn, isOwner, async (req, res) => {
+router.delete('/:productId', isLoggedIn, isOwner, catchAsync(async (req, res) => {
     const {id, productId} = req.params;
     await Product.findByIdAndDelete(productId);
     res.redirect(`/stores/${id}`)
-})
+}))
 
 
 
