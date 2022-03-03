@@ -16,7 +16,7 @@
             </div>
             <div class="mb-3 input-group">
                 <span class="input-group-text">&euro;</span>
-                <input class="form-control" type="number" name="price" id="price" value="<%= product.price %>" step="0.01" required>
+                <input class="form-control" type="number" name="price" id="price" value="<%= product.price %>" step="0.01" min="0.01" required>
                 <select class="form-select" name="unity" id="">
                     <option value="Kg">Kg</option>
                     <option value="Un">Un</option>
@@ -25,7 +25,7 @@
 
             <div class="mb-3">
                 <label class="form-label" for="inStock">Available</label>
-                <input class="form-control" type="number" name="inStock" id="inStock" value="<%= product.inStock %>" required>
+                <input class="form-control" type="number" name="inStock" min="1" id="inStock" value="<%= product.inStock %>" required>
             </div>
 
             <div class="mb-3">

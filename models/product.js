@@ -52,6 +52,7 @@ const ProductSchema = new mongoose.Schema( {
     images: [ProductImageSchema],
     price: {
         type: Number,
+        min: 0.01,
         required: true
     },
     unity: {
@@ -61,6 +62,7 @@ const ProductSchema = new mongoose.Schema( {
     },
     inStock: {
         type: Number,
+        min: 1,
         required: true,
     },
     category: {
