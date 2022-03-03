@@ -108,12 +108,13 @@ app.get('/search', async (req, res) => {
 })
 
 //Page not found
-app.get('*', (req, res) => {
-    res.render('pagenotfound')
+app.all('*', (req, res, next) => {
+    // res.render('pagenotfound')
+    next(new ExpressError('Page Not Found', 404))
 })
 
 app.use((err, req, res, next) => {
-    const {status = 500, message = 'Something went wrong'} = err; //adds a default error 500 to status if the error is not what we specified in the class AppError
+    const {status = 500} = err; //adds a default error 500 to status if the error is not what its in the class AppError
     if(!err.message) err.message = 'Something went wrong'
     res.status(status).render('error', {err})
 })

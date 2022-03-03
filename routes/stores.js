@@ -44,7 +44,6 @@ router.post('/', upload.array('image'), isLoggedIn, async (req, res, next) => {
 router.get('/:id', catchAsync(async (req, res, next) => {
     const {id} = req.params;
     const store = await Store.findById(id).populate('products').populate('owner');
-    console.log(store)
     if(!store) {
         req.flash('error', 'Cannot find that store.');
         return res.redirect('/stores')
