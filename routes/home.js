@@ -7,8 +7,8 @@ const Store = require('../models/store');
 
 //Home
 router.get('/', async (req, res) => {
-    const products = await Product.find({}).populate('store')
-    res.render('home/home', {products}) 
+    // const products = await Product.find({}).populate('store')
+    res.render('home/home') 
 })
 
 router.post('/', async (req, res) => {
