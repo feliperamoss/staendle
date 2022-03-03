@@ -25,6 +25,7 @@ router.post('/stores/:id/products/:productId', catchAsync(async (req, res) => {
 
     const checkProduct = req.session.cart.findIndex(obj => obj.product._id == product._id)
 
+    //adds product to session
     if(checkProduct === -1) {
         req.session.cart.push({
             buyQty: qty,  
@@ -32,6 +33,7 @@ router.post('/stores/:id/products/:productId', catchAsync(async (req, res) => {
         });
     }
     
+    //sum products quantity if added again in the cart
     if(checkProduct !== -1) {
         for(let item of req.session.cart) {
             if(product._id == item.product._id) {   
@@ -117,7 +119,7 @@ router.get('/checkout', isLoggedIn, (req, res) => {
     res.render('payment/checkout')
 })
 
-//Show checkout
+//Post checkout
 
 router.post('/checkout', isLoggedIn, catchAsync(async (req, res) => {
     // const ids = [];
