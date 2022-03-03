@@ -17,7 +17,7 @@ router.get('/new', catchAsync(async (req, res) => {
 }))
 
 //Create new product
-router.post('/',upload.array('productImage'), catchAsync(async (req, res, next) => {
+router.post('/',upload.array('productImage'), async (req, res, next) => {
     try {
         const {id} =req.params
         const store = await Store.findById(id);
@@ -34,7 +34,7 @@ router.post('/',upload.array('productImage'), catchAsync(async (req, res, next) 
       catch(e) {
           next(e)
       }
-}))
+})
 
 //Show info about product
 
