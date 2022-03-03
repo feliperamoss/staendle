@@ -7,7 +7,7 @@ const ImageSchema = new mongoose.Schema({
     filename: String
 });
 
-//creates a virtual property 'thumbnail'
+//creates a virtual property 'thumbnail', replaces with a new size for the img from cloudnary
 ImageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('upload', '/upload/w_200');
 })
