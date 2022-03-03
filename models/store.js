@@ -7,6 +7,7 @@ const ImageSchema = new mongoose.Schema({
     filename: String
 });
 
+//creates a virtual property 'thumbnail'
 ImageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('upload', '/upload/w_200');
 })
